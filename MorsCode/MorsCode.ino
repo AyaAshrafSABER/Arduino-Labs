@@ -1,6 +1,7 @@
 #include "String.h"
 int led = 13;
-int TIMEUNIT = 200;
+int buzzer = 11;
+int TIMEUNIT = 150M;
 int shortGap = 3 * TIMEUNIT;
 int interElementGap = TIMEUNIT;
 int mediumGap = 7 * TIMEUNIT;
@@ -11,6 +12,7 @@ String message = "Morse Code";
 
 void setup() {
   pinMode(led, OUTPUT);
+  pinMode(buzzer, OUTPUT);
   Serial.begin(9600);
 
 
@@ -29,17 +31,17 @@ void loop() {
 
 void flash(int duration){
    digitalWrite(led,HIGH);
+   digitalWrite(buzzer,HIGH);
   delay(duration);
   digitalWrite(led,LOW);
+  digitalWrite(buzzer,LOW);
 }
 
 void handleSignals(String input) {
   int counter = 0;
   while (input.charAt(counter) !=  '\0') {
-    Serial.println("While");
     char tmp = input.charAt(counter);
     tmp = toUpperCase(tmp);  
-    Serial.println("tmp");
 
     
    switch (tmp){
@@ -164,9 +166,7 @@ void handleSignals(String input) {
      flash(dashFlash);
       delay(interElementGap); 
       flash(dashFlash);  
-       delay(interElementGap);
-      flash(dashFlash); 
-       delay(interElementGap); 
+      delay(interElementGap);
       flash(dashFlash); 
       delay(shortGap);
 
